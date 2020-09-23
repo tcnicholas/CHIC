@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetrahedral structure map</title>
+    <!-- START SIGMA IMPORTS -->
+    <script src="assets/js/src/sigma.core.js"></script>
+    <script src="assets/js/src/conrad.js"></script>
+    <script src="assets/js/src/utils/sigma.utils.js"></script>
+    <script src="assets/js/src/utils/sigma.polyfills.js"></script>
+    <script src="assets/js/src/sigma.settings.js"></script>
+    <script src="assets/js/src/classes/sigma.classes.dispatcher.js"></script>
+    <script src="assets/js/src/classes/sigma.classes.configurable.js"></script>
+    <script src="assets/js/src/classes/sigma.classes.graph.js"></script>
+    <script src="assets/js/src/classes/sigma.classes.camera.js"></script>
+    <script src="assets/js/src/classes/sigma.classes.quad.js"></script>
+    <script src="assets/js/src/classes/sigma.classes.edgequad.js"></script>
+    <script src="assets/js/src/captors/sigma.captors.mouse.js"></script>
+    <script src="assets/js/src/captors/sigma.captors.touch.js"></script>
+    <script src="assets/js/src/renderers/sigma.renderers.canvas.js"></script>
+    <script src="assets/js/src/renderers/sigma.renderers.webgl.js"></script>
+    <script src="assets/js/src/renderers/sigma.renderers.svg.js"></script>
+    <script src="assets/js/src/renderers/sigma.renderers.def.js"></script>
+    <script src="assets/js/src/renderers/webgl/sigma.webgl.nodes.def.js"></script>
+    <script src="assets/js/src/renderers/webgl/sigma.webgl.nodes.fast.js"></script>
+    <script src="assets/js/src/renderers/webgl/sigma.webgl.edges.def.js"></script>
+    <script src="assets/js/src/renderers/webgl/sigma.webgl.edges.fast.js"></script>
+    <script src="assets/js/src/renderers/webgl/sigma.webgl.edges.arrow.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.labels.def.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.hovers.def.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.nodes.def.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.edges.def.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.edges.curve.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.edges.arrow.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.edges.curvedArrow.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.edgehovers.def.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.edgehovers.curve.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.edgehovers.arrow.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js"></script>
+    <script src="assets/js/src/renderers/canvas/sigma.canvas.extremities.def.js"></script>
+    <script src="assets/js/src/renderers/svg/sigma.svg.utils.js"></script>
+    <script src="assets/js/src/renderers/svg/sigma.svg.nodes.def.js"></script>
+    <script src="assets/js/src/renderers/svg/sigma.svg.edges.def.js"></script>
+    <script src="assets/js/src/renderers/svg/sigma.svg.edges.curve.js"></script>
+    <script src="assets/js/src/renderers/svg/sigma.svg.labels.def.js"></script>
+    <script src="assets/js/src/renderers/svg/sigma.svg.hovers.def.js"></script>
+    <script src="assets/js/src/middlewares/sigma.middlewares.rescale.js"></script>
+    <script src="assets/js/src/middlewares/sigma.middlewares.copy.js"></script>
+    <script src="assets/js/src/misc/sigma.misc.animation.js"></script>
+    <script src="assets/js/src/misc/sigma.misc.bindEvents.js"></script>
+    <script src="assets/js/src/misc/sigma.misc.bindDOMEvents.js"></script>
+    <script src="assets/js/src/misc/sigma.misc.drawHovers.js"></script>
+    <script src="assets/js/sigma.parsers.json.js"></script>
+    <script src="assets/js/src/renderers/shape-library.js"></script>
+    <script src="assets/js/src/renderers/sigma.renderers.customShapes.js"></script>
+
+    <style>
+      td {padding: 5px}
+      .header {
+        overflow: hidden;
+        background-color: #B6D3F1;
+        padding: 10px
+      }
+      .header a {
+        float: left;
+        color: black;
+        text-align: center;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px;
+        line-height: 25px;
+        border-radius: 4px;
+        }
+
+      .header a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      .header a.active {
+        background-color: dodgerblue;
+        color: white;
+      }
+
+      .header-center {
+        float: center;
+      }
+
+      @media screen and (max-width: 500px) {
+        .header a {
+          float: none;
+          display: block;
+          text-align: left;
+        }
+
+        .header-right {
+          float: none;
+        }
+      }
+
+      /* Container for flexboxes */
+      section {
+        display: -webkit-flex;
+        display: flex;
+      }
+
+      /* Style the list inside the menu */
+      sidebar ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      /* The sidebar menu */
+      .sidebar {
+        height: 100%; /* 100% Full-height */
+        width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Stay on top */
+        top: 0;
+        left: 0;
+        background-color: rgba(190,190,190,0.8); /* Grey*/
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 60px; /* Place content 60px from the top */
+        transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+      }
+      /* The sidebar links */
+      .sidebar a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: underline;
+        font-size: 16px;
+        color: navy;
+        display: block;
+        transition: 0.3s;
+        }
+
+      /* When you mouse over the navigation links, change their color */
+      .sidebar a:hover {
+        color: #f1f1f1;
+      }
+
+      /* Position and style the close button (top right corner) */
+      .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+
+      /* The button used to open the sidebar */
+      .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: rgba(190,190,190,0.5);
+        color: black;
+        padding: 10px 15px;
+        border: none;
+      }
+
+      .openbtn:hover {
+        background-color: #444;
+      }
+
+      /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+      #main {
+          transition: margin-left .5s; /* If you want a transition effect */
+          padding: 0px;
+        }
+
+        /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+        @media screen and (max-height: 450px) {
+          .sidebar {padding-top: 15px;}
+          .sidebar a {width:90%;}
+        }
+
+        #graph-container {
+          top: 200px;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          position: absolute;
+        }
+        #txbox{
+          background: rgba(72,145,220,0.4);
+          box-shadow: 1px 2px 2px black;
+          width: 18em;
+          height: auto;
+          padding-left: 2%;
+          padding-right: 2%;
+          position: absolute;
+          border-radius: 25px;
+          z-index: 9;
+        }
+       #txbox2{
+          height: auto;
+          width: auto;
+          padding-left: 2%;
+          padding-right: 2%;
+          line-height: 5pt;
+        }
+        #txbox3{
+           width: auto;
+           height: auto;
+           padding-left: 2%;
+           padding-right: 2%;
+           line-height: 5pt;
+           z-index: 9;
+         }
+         #txbox4{
+            width: auto;
+            height: auto;
+            padding-left: 2%;
+            padding-right: 2%;
+            line-height: 5pt;
+            z-index: 9;
+          }
+          #links{
+             width: 225px;
+             height: auto;
+             padding-left: 2%;
+             padding-right: 2%;
+             position: absolute;
+             line-height: 16pt;
+             z-index: 9;
+           }
+
+      </style>
+  </head>
+
+  <body>
+<div class="section">
+  <sidebar>
+<div id="Sidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+<ul>
+  <li>
+    <span style="font-family:sans-serif">
+    <h3>Legend</h3>
+  </span>
+      <li>
+        <div id="txbox2">
+        <span style="font-family:sans-serif">
+          <h4><u>Inorganic networks</u></h4>
+          <table style="width:100%">
+            <tr>
+              <td><span style="font-size:250%; color:#a79d96;">&bull;</span></td>
+              <td>Zeolites/AlPOs</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:250%; color:#cf7a30;">&bull;</span></td>
+              <td>SiO<sub>2</sub></td>
+            </tr>
+            <tr>
+              <td><span style="font-size:250%; color:#be0f34;">&bull;</span></td>
+              <td>Other AB<sub>2</sub></td>
+            </tr>
+            <tr>
+              <td><span style="font-size:250%; color:#be0f34;">&bull;</span></td>
+              <td>Cynanides</td>
+            </tr>
+        </table>
+        </span>
+      </div>
+    </li>
+    <li>
+      <div id="txbox3">
+        <span style="font-family:sans-serif">
+          <h4><u>Molecular networks</u></h4>
+          <table style="width:100%">
+            <tr>
+              <td><span style="font-size:20px; color:#69913b;">&#9733;</span></td>
+              <td>Clathrates</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:25px; color:#4891dc;">&#9670;</span></td>
+              <td>Disordered Ices</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:30px; color:#4891dc;">&#9632;</span></td>
+              <td>Ordered Ices</td>
+            </tr>
+        </table>
+        </span>
+      </div>
+    </li>
+    <li>
+      <div id="txbox4">
+        <span style="font-family:sans-serif">
+          <h4><u>Hybrid networks</u></h4>
+          <table style="width:100%">
+            <tr>
+              <td><span style="font-size:25px; color:#002147;">&#9632;</span></td>
+              <td>ZIFs</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:25px; color:#002147;">&#9632;</span></td>
+              <td>CdIFs</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:16px; color:#002147;">&#9650;</span></td>
+              <td>BIFs</td>
+            </tr>
+            <tr>
+              <td><span style="font-size:16px; color:#002147;">&#9660;</span></td>
+              <td>TIFs</td>
+            </tr>
+        </table>
+        </span>
+      </div>
+    </li>
+    <li>
+      <div id="links">
+      <li>
+          <span style="font-family:sans-serif">
+          <h3>Details</h3>
+          <p>For more information about the coarse-graining procedure used to produce this map see our preprint at: <a href="https://arxiv.org/abs/2005.09939">arxiv.org/abs/2005.09939</a></p>
+
+          <p> Database and coarse-graining code: <a href="https://github.com/tcnicholas/CHAIS">Github</a></p>
+
+          <p> Interactive graph visualisation on this site made possible by: <a href="http://sigmajs.org">Sigma.js</a></p>
+
+        </span>
+      </div>
+    </li>
+    </div>
+</sidebar>
+</div>
+<div id="main">
+
+      <!-- Title box -->
+<div class="header">
+   <span style="font-family:sans-serif">
+     <div class="header-center"><h2>Two-dimensional map for inorganic and hybrid tetrahedral structures</h2></div>
+  </span>
+  </div>
+  <div>
+   <button class="openbtn" onclick="openNav()">&#9776; Legend and Details</button>
+ </div>
+  <!-- Insert graph container here -->
+
+
+      <div id="graph-container"></div>
+
+
+</div>
+
+      <script>
+          sigma.utils.pkg('sigma.canvas.nodes');
+          // Add a method to the graph model that returns an
+            // object with every neighbors of a node inside:
+            sigma.classes.graph.addMethod('neighbors', function(nodeId) {
+              var k,
+                  neighbors = {},
+                  index = this.allNeighborsIndex[nodeId] || {};
+
+              for (k in index)
+                neighbors[k] = this.nodesIndex[k];
+
+              return neighbors;
+            });
+        /**
+         * Here is just a basic example on how to properly display a graph
+         * exported from Gephi as a JSON file, with the JSON Exporter plugin from
+         * the Oxford Internet Institute:
+         *
+         *  > https://marketplace.gephi.org/plugin/json-exporter/
+         *
+         * The plugin sigma.parsers.json can load and parse the JSON graph file,
+         * and instantiate sigma when the graph is received.
+         *
+         * The object given as the second parameter is the base of the instance
+         * configuration object. The plugin will just add the "graph" key to it
+         * before the instanciation.
+         */
+
+          sigma.parsers.json('assets/data/structureData.json', {
+
+              container: 'graph-container',
+              settings: {
+                defaultNodeColor: '#ec5148'
+              },
+              renderer: {
+                container: document.getElementById('graph-container'),
+                type: 'canvas'
+              },
+          },
+          function(s) {
+                // We first need to save the original colors of our
+                // nodes and edges, like this:
+                s.graph.nodes().forEach(function(n) {
+                  n.originalColor = n.color;
+                });
+                s.graph.edges().forEach(function(e) {
+                  e.originalColor = e.color;
+                });
+
+                // When a node is clicked, we check for each node
+                // if it is a neighbor of the clicked one. If not,
+                // we set its color as transparent silver, and else, it takes its
+                // original color.
+                // We do the same for the edges, and we only keep
+                // edges that have both extremities colored.
+                s.bind('clickNode', function(e) {
+                  var nodeId = e.data.node.id,
+                      toKeep = s.graph.neighbors(nodeId);
+                  toKeep[nodeId] = e.data.node;
+
+                  s.graph.nodes().forEach(function(n) {
+                    if (toKeep[n.id])
+                      n.color = n.originalColor;
+                    else
+                      n.color = 'rgba(192, 192, 192, 0.5)';
+                  });
+
+
+                  // Since the data has been modified, we need to
+                  // call the refresh method to make the colors
+                  // update effective.
+                  s.refresh();
+                });
+
+                // When the stage is clicked, we just color each
+                // node and edge with its original color.
+                s.bind('clickStage', function(e) {
+                  s.graph.nodes().forEach(function(n) {
+                    n.color = n.originalColor;
+                  });
+
+                  // Same as in the previous event:
+                  s.refresh();
+                });
+
+          },
+        );
+
+      </script>
+
+      <script>
+      function openNav() {
+        document.getElementById("Sidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+      }
+
+      function closeNav() {
+        document.getElementById("Sidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+      }
+      </script>
+  </div>
+  </body>
+
+</html>
