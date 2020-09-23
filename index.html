@@ -228,20 +228,20 @@
   </head>
 
   <body>
-<div class="section">
-  <sidebar>
-<div id="Sidebar" class="sidebar">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-<ul>
-  <li>
-    <span style="font-family:sans-serif">
-    <h3>Legend</h3>
-  </span>
-      <li>
-        <div id="txbox2">
-        <span style="font-family:sans-serif">
-          <h4><u>Inorganic networks</u></h4>
-          <table style="width:100%">
+    <div class="section">
+      <sidebar>
+        <div id="Sidebar" class="sidebar">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <ul>
+          <li>
+          <span style="font-family:sans-serif">
+          <h3>Legend</h3>
+          </span>
+          <li>
+          <div id="txbox2">
+            <span style="font-family:sans-serif">
+            <h4><u>Inorganic networks</u></h4>
+            <table style="width:100%">
             <tr>
               <td><span style="font-size:250%; color:#a79d96;">&bull;</span></td>
               <td>Zeolites/AlPOs</td>
@@ -315,7 +315,7 @@
           <h3>Details</h3>
           <p>For more information about the coarse-graining procedure used to produce this map see our preprint at: <a href="https://arxiv.org/abs/2005.09939">arxiv.org/abs/2005.09939</a></p>
 
-          <p> Database and coarse-graining code: <a href="https://github.com/tcnicholas/CHAIS">Github</a></p>
+          <p> Database and coarse-graining code to be released soon at: <a href="https://github.com/tcnicholas/CHIC">Github</a></p>
 
           <p> Interactive graph visualisation on this site made possible by: <a href="http://sigmajs.org">Sigma.js</a></p>
 
@@ -336,7 +336,6 @@
   <div>
    <button class="openbtn" onclick="openNav()">&#9776; Legend and Details</button>
  </div>
-  <!-- Insert graph container here -->
 
 
       <div id="graph-container"></div>
@@ -358,20 +357,6 @@
 
               return neighbors;
             });
-        /**
-         * Here is just a basic example on how to properly display a graph
-         * exported from Gephi as a JSON file, with the JSON Exporter plugin from
-         * the Oxford Internet Institute:
-         *
-         *  > https://marketplace.gephi.org/plugin/json-exporter/
-         *
-         * The plugin sigma.parsers.json can load and parse the JSON graph file,
-         * and instantiate sigma when the graph is received.
-         *
-         * The object given as the second parameter is the base of the instance
-         * configuration object. The plugin will just add the "graph" key to it
-         * before the instanciation.
-         */
 
           sigma.parsers.json('assets/data/structureData.json', {
 
