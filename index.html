@@ -53,9 +53,15 @@
     <script src="assets/js/sigma.parsers.json.js"></script>
     <script src="assets/js/src/renderers/shape-library.js"></script>
     <script src="assets/js/src/renderers/sigma.renderers.customShapes.js"></script>
+    <!-- END SIGMA IMPORTS -->
+
+    <!-- DEFINE STYLES HERE -->
 
     <style>
+    /* Table Styling */
       td {padding: 5px}
+
+/* Header Styling */
       .header {
         overflow: hidden;
         background-color: #B6D3F1;
@@ -86,31 +92,31 @@
         float: center;
       }
 
-      @media screen and (max-width: 500px) {
-        .header a {
-          float: none;
-          display: block;
-          text-align: left;
-        }
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
 
-        .header-right {
-          float: none;
-        }
-      }
+  .header-right {
+    float: none;
+  }
+}
 
-      /* Container for flexboxes */
-      section {
-        display: -webkit-flex;
-        display: flex;
-      }
+/* Container for flexboxes */
+section {
+  display: -webkit-flex;
+  display: flex;
+}
 
-      /* Style the list inside the menu */
-      sidebar ul {
-        list-style-type: none;
-        padding: 0;
-      }
+/* Style the list inside the menu */
+sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
 
-      /* The sidebar menu */
+/* The sidebar menu */
       .sidebar {
         height: 100%; /* 100% Full-height */
         width: 0; /* 0 width - change this with JavaScript */
@@ -138,59 +144,59 @@
         color: #f1f1f1;
       }
 
-      /* Position and style the close button (top right corner) */
-      .sidebar .closebtn {
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: rgba(190,190,190,0.5);
+  color: black;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s; /* If you want a transition effect */
+  padding: 0px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {width:90%;}
+}
+
+      #graph-container {
+        top: 200px;
+        bottom: 0;
+        left: 0;
+        right: 0;
         position: absolute;
-        top: 0;
-        right: 25px;
-        font-size: 36px;
-        margin-left: 50px;
       }
-
-      /* The button used to open the sidebar */
-      .openbtn {
-        font-size: 20px;
-        cursor: pointer;
-        background-color: rgba(190,190,190,0.5);
-        color: black;
-        padding: 10px 15px;
-        border: none;
-      }
-
-      .openbtn:hover {
-        background-color: #444;
-      }
-
-      /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-      #main {
-          transition: margin-left .5s; /* If you want a transition effect */
-          padding: 0px;
-        }
-
-        /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-        @media screen and (max-height: 450px) {
-          .sidebar {padding-top: 15px;}
-          .sidebar a {width:90%;}
-        }
-
-        #graph-container {
-          top: 200px;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          position: absolute;
-        }
-        #txbox{
-          background: rgba(72,145,220,0.4);
-          box-shadow: 1px 2px 2px black;
-          width: 18em;
-          height: auto;
-          padding-left: 2%;
-          padding-right: 2%;
-          position: absolute;
-          border-radius: 25px;
-          z-index: 9;
-        }
+      #txbox{
+         background: rgba(72,145,220,0.4);
+         box-shadow: 1px 2px 2px black;
+         width: 18em;
+         height: auto;
+         padding-left: 2%;
+         padding-right: 2%;
+         position: absolute;
+         border-radius: 25px;
+         z-index: 9;
+       }
        #txbox2{
           height: auto;
           width: auto;
@@ -228,20 +234,20 @@
   </head>
 
   <body>
-    <div class="section">
-      <sidebar>
-        <div id="Sidebar" class="sidebar">
-          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-          <ul>
-          <li>
-          <span style="font-family:sans-serif">
-          <h3>Legend</h3>
-          </span>
-          <li>
-          <div id="txbox2">
-            <span style="font-family:sans-serif">
-            <h4><u>Inorganic networks</u></h4>
-            <table style="width:100%">
+<div class="section">
+  <sidebar>
+<div id="Sidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+<ul>
+  <li>
+    <span style="font-family:sans-serif">
+    <h3>Legend</h3>
+  </span>
+      <li>
+        <div id="txbox2">
+        <span style="font-family:sans-serif">
+          <h4><u>Inorganic networks</u></h4>
+          <table style="width:100%">
             <tr>
               <td><span style="font-size:250%; color:#a79d96;">&bull;</span></td>
               <td>Zeolites/AlPOs</td>
@@ -336,6 +342,7 @@
   <div>
    <button class="openbtn" onclick="openNav()">&#9776; Legend and Details</button>
  </div>
+  <!-- Insert graph container here -->
 
 
       <div id="graph-container"></div>
@@ -357,6 +364,20 @@
 
               return neighbors;
             });
+        /**
+         * Here is just a basic example on how to properly display a graph
+         * exported from Gephi as a JSON file, with the JSON Exporter plugin from
+         * the Oxford Internet Institute:
+         *
+         *  > https://marketplace.gephi.org/plugin/json-exporter/
+         *
+         * The plugin sigma.parsers.json can load and parse the JSON graph file,
+         * and instantiate sigma when the graph is received.
+         *
+         * The object given as the second parameter is the base of the instance
+         * configuration object. The plugin will just add the "graph" key to it
+         * before the instanciation.
+         */
 
           sigma.parsers.json('assets/data/structureData.json', {
 
