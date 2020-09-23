@@ -1,7 +1,7 @@
-CHAINs
+CHIC
 =============================
 
-Coarse-graining Hybrid And Inorganic Networks
+Coarse-graining of Hybrid And Inorganic Crystals
 
 Requirements
 ------------
