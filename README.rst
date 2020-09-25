@@ -1,7 +1,7 @@
 CHIC
 =============================
 
-Coarse-graining of Hybrid And Inorganic Crystals
+Coarse-graining of Hybrid and Inorganic Crystals
 
 Requirements
 ------------
