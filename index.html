@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Tetrahedral structure map</title>
     <!-- START SIGMA IMPORTS -->
     <script src="assets/js/src/sigma.core.js"></script>
@@ -53,37 +54,18 @@
     <script src="assets/js/sigma.parsers.json.js"></script>
     <script src="assets/js/src/renderers/shape-library.js"></script>
     <script src="assets/js/src/renderers/sigma.renderers.customShapes.js"></script>
+    <!--Button Sources -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
     <style>
-      td {padding: 5px}
+      td {
+        padding: 5px
+      }
       .header {
         overflow: hidden;
         background-color: #B6D3F1;
         padding: 10px
-      }
-      .header a {
-        float: left;
-        color: black;
-        text-align: center;
-        padding: 12px;
-        text-decoration: none;
-        font-size: 18px;
-        line-height: 25px;
-        border-radius: 4px;
-        }
-
-      .header a:hover {
-        background-color: #ddd;
-        color: black;
-      }
-
-      .header a.active {
-        background-color: dodgerblue;
-        color: white;
-      }
-
-      .header-center {
-        float: center;
       }
 
       @media screen and (max-width: 500px) {
@@ -120,7 +102,7 @@
         left: 0;
         background-color: rgba(190,190,190,0.8); /* Grey*/
         overflow-x: hidden; /* Disable horizontal scroll */
-        padding-top: 60px; /* Place content 60px from the top */
+        padding-top: 30px; /* Place content 60px from the top */
         transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
       }
       /* The sidebar links */
@@ -145,6 +127,7 @@
         right: 25px;
         font-size: 36px;
         margin-left: 50px;
+        text-decoration: none;
       }
 
       /* The button used to open the sidebar */
@@ -170,12 +153,35 @@
         /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
         @media screen and (max-height: 450px) {
           .sidebar {padding-top: 15px;}
-          .sidebar a {width:90%;}
+        }
+
+        .button-flex-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         }
 
         #legendbutton{
-          position: fixed;
+          position: relative;
           z-index: 10;
+        }
+
+        #reset-zoom{
+          font-size: 20px;
+          position: relative;
+          z-index: 10;
+          cursor: pointer;
+          background-color: rgba(190,190,190,0.5);
+          color: black;
+          padding: 10px 15px;
+          border: none;
+          text-align: center;
+        }
+
+        #camerabutton{
+          position: relative;
+          z-index: 10;
+          text-align: center;
         }
 
         #graph-container {
@@ -185,17 +191,7 @@
           right: 0;
           position: absolute;
         }
-        #txbox{
-          background: rgba(72,145,220,0.4);
-          box-shadow: 1px 2px 2px black;
-          width: 18em;
-          height: auto;
-          padding-left: 2%;
-          padding-right: 2%;
-          position: absolute;
-          border-radius: 25px;
-          z-index: 9;
-        }
+
        #txbox2{
           height: auto;
           width: auto;
@@ -220,7 +216,7 @@
             z-index: 9;
           }
           #links{
-             width: 225px;
+             width: auto;
              height: auto;
              padding-left: 2%;
              padding-right: 2%;
@@ -318,13 +314,16 @@
       <div id="links">
         <hr>
           <span style="font-family:sans-serif">
+          <h3>Navigating the map</h3>
+          <p> Zoom in or hover over nodes to reveal name labels.  Click on a structure to highlight that family of structures across the whole map. </p>
           <h3>Details</h3>
-          <p> Zoom in or hover over nodes to reveal name labels.  Click on a structure to highlight that family of structures in across the whole map. </p>
+          <p> The closer together two nodes are, the more similar the two structures are, and <i>vice versa.</i> </p>
           <p> Nodes sizes are inversely proportional to the (scaled) tetrahedral density. </p>
           <p> For more information about the coarse-graining procedure used to produce this map see our preprint at: <a href="https://arxiv.org/abs/2005.09939">arxiv.org/abs/2005.09939</a></p>
-          <p> Database and coarse-graining code: <a href="https://github.com/tcnicholas/CHAIS">Github</a></p>
+          <p> Database and coarse-graining code to be released soon at: <a href="https://github.com/tcnicholas/CHAIS">github.com/tcnicholas/CHIC</a></p>
           <hr>
-          <a href="https://twitter.com/thomascnicholas?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @thomascnicholas</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          <p><a href="https://twitter.com/thomascnicholas?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @thomascnicholas</a></p>
+          <p><a class="github-button" href="https://github.com/tcnicholas" aria-label="Follow @tcnicholas on GitHub">Follow @tcnicholas</a></p>
           <hr>
           <p> Interactive graph visualisation on this site made possible by: <a href="http://sigmajs.org">Sigma.js</a></p>
 
@@ -344,9 +343,16 @@
 
 
       <div id="graph-container"></div>
-      <div id="legendbutton">
-       <button class="openbtn" onclick="openNav()">&#9776; Legend and Details</button>
+
+      <div class="button-flex-container">
+        <div id="legendbutton">
+         <button class="openbtn" onclick="toggleNav()">&#9776; Legend and Details</button>
+        </div>
+       <div id="camerabutton">
+         <button id="reset-zoom"><i class="material-icons">&#xe56b;</i> Reset graph zoom</button>
+       </div>
      </div>
+
 
 
 </div>
@@ -362,7 +368,9 @@
                 neighbors[k] = this.nodesIndex[k];
 
               return neighbors;
+
             });
+
 
           sigma.parsers.json('assets/data/structureData.json', {
 
@@ -375,7 +383,17 @@
                 type: 'canvas'
               },
           },
+
           function(s) {
+                //Reset Camera Zoom
+                document.getElementById('reset-zoom').addEventListener('click', function() {
+                  s.camera.goTo({
+                    x: 0,
+                    y: 0,
+                    angle: 0,
+                    ratio: 1
+                  });
+                });
                 // We first need to save the original colors of our
                 // nodes and edges, like this:
                 s.graph.nodes().forEach(function(n) {
@@ -420,17 +438,23 @@
                   // Same as in the previous event:
                   s.refresh();
                 });
-
           },
         );
 
       </script>
 
       <script>
-      function openNav() {
-        document.getElementById("Sidebar").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-      }
+        function toggleNav() {
+          var element = document.getElementById("Sidebar");
+          if (element.style.width == "275px") {
+              element.style.width = "0px";
+              document.getElementById("main").style.marginLeft= "0";
+
+          } else {
+              element.style.width = "275px";
+              document.getElementById("main").style.marginLeft = "275px";
+          }
+        }
 
       function closeNav() {
         document.getElementById("Sidebar").style.width = "0";
