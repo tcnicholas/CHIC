@@ -105,7 +105,7 @@
     // {booleans} The different drawing modes:
     //           false: Layered not displayed.
     //           true: Layered displayed.
-    drawEdges: true,
+    drawEdges: false,
     drawNodes: true,
     drawLabels: true,
     drawEdgeLabels: false,
