@@ -1,9 +1,8 @@
 CHIC-1
 =============================
 
-Supporting dataset and example plotting script for:
-"Understanding the geometric diversity of inorganic and hybrid frameworks through structural coarse-graining"
-Thomas C. Nicholas, Andrew L. Goodwin, Volker L. Deringer
+Supporting dataset and example plotting script for: "Understanding the geometric diversity of inorganic and hybrid frameworks through structural coarse-graining", Thomas C. Nicholas, Andrew L. Goodwin, Volker L. Deringer.
+
 DOI: `10.1039/d0sc03287e <http://doi.org/10.1039/d0sc03287e>`_
 
 Structure files
