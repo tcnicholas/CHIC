@@ -4,7 +4,7 @@ CHIC-1
 Supporting dataset and example plotting script for:
 "Understanding the geometric diversity of inorganic and hybrid frameworks through structural coarse-graining"
 Thomas C. Nicholas, Andrew L. Goodwin, Volker L. Deringer
-DOI: 10.1039/d0sc03287e_
+DOI: `10.1039/d0sc03287e <http://doi.org/10.1039/d0sc03287e>`_
 
 Structure files
 ------------
@@ -33,5 +33,3 @@ Plotting script
 ------------
 
 An example plotting script used to generate the publication figures is given in the Juypter Notebook file (also given here as an HTML file).
-
-.. _DOI: http://doi.org/10.1039/d0sc03287e
